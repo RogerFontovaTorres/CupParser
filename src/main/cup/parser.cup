@@ -1,0 +1,21 @@
+package org.example;
+
+import java_cup.runtime.*;
+
+class Parser;
+
+terminal ADD, MULT, LPAREN, RPAREN, ROGER;
+
+terminal Integer NUMBER;
+
+non terminal Integer expr;
+
+precedence left ADD;
+precedence left MULT;
+
+start with expr;
+
+//expr ::= expr:e1 ADD expr:e2 {: RESULT = e1 + e2; :}
+//      |  expr:e1 MULT expr:e2 {: RESULT = e1 * e2; :}
+//      |  LPAREN expr:e RPAREN {: RESULT = e; :}
+//      |  NUMBER:n             {: RESULT = n; :};
