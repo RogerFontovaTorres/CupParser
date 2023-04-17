@@ -9,7 +9,7 @@ import java_cup.runtime.*;
 
 header = "p cnf"
 formulaEOL = "0"
-negated = "-"
+minus = "-"
 comment = "^c ".{newLine}
 number = [1-9][0-9]*
 whitespace = [ \t\n]
@@ -32,11 +32,14 @@ newLine = \n | \r | \r\n
 
 %%
 
+{comment} {}
+
 {digit}+ { return symbol(ParserSym.NUMBER, Integer.valueOf(yytext())); }
-"(" { return symbol(ParserSym.FORMULANEWLINE, yytext()); }
-")" { return symbol(ParserSym.RPAREN, yytext()); }
-"+" { return symbol(ParserSym.ADD, yytext()); }
-"*" { return symbol(ParserSym.MULT, yytext()); }
+
+{formulaEOL} { return symbol(ParserSym.FORMULANEWLINE, yytext()); }
+
+{minus} {return symbol(ParserSym.MINUS, yytext());}
+
 
 {whitespace}+ { }
 [^] {throw new Error("Cadena incorrecta (" + yytext() + ")");}
