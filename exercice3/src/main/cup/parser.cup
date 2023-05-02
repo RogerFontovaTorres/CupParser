@@ -27,100 +27,42 @@ parser code {:
         report_error("Error de sintaxis: linea "+idLexer.linea()+
         ", columna "+idLexer.columna(), null);
     }
+    String sentence = "";
 :}
 
-
-
-terminal Integer REG;
-terminal Integer NUMBER;
-
-terminal UMINUS;
-terminal NOT;
-
-terminal ADD, SUB, MULT, DIV, REST;
-terminal LT, BT, LE, BE, EQ, DIFF;
-terminal AND, OR, ASSIGN;
+terminal String VAR;
+terminal String NOT;
+terminal String OR, AND;
+terminal DIMPL; // double implication
+terminal IMPL; // implication
+terminal String LPAREN, RPAREN;
 terminal NEWLINE;
-terminal QUESTION, COLON;
 
+non terminal prog;
+non terminal sentencia;
+non terminal String expr;
 
-terminal LPAREN, RPAREN;
-
-
-non terminal Integer expr;
-non terminal calculadora, sentencia;
-non terminal sent_cond;
-non terminal Boolean expr_log;
-non terminal Boolean aux1;
-non terminal Boolean aux2;
-non terminal Boolean aux;
-
-precedence left LT, BT, LE, BE, EQ, DIFF;
+precedence left IMPL, DIMPL;
 precedence left OR;
 precedence left AND;
-precedence left ADD, SUB;
-precedence left MULT, DIV, REST;
-precedence left UMINUS, NOT;
+precedence left NOT;
 
-start with calculadora;
+start with prog;
 
-calculadora ::=
-                                                         {: ; :}
-                    | calculadora sentencia:d            {: ; :}
-                    ;
+prog ::=        {:;:}
+        |   prog sentencia {:;:}
+        ;
 
-sentencia   ::= NEWLINE  {: ; :}
-                |	expr:e NEWLINE {: System.out.println("Here  " + e); :}
-                |   REG:r ASSIGN expr:e NEWLINE {: regs.add(r, e);  :}
-                |   LPAREN expr_log RPAREN QUESTION aux1 sent_cond COLON aux2 sent_cond NEWLINE    {: ; :}
-                |   error                       {: System.err.println("ERROR EXPRESSIO INCORRECTA"); :}
-         		;
+sentencia ::= NEWLINE {:;:}
+        |   expr:e NEWLINE    {: System.out.println(e); :}
+        |   error           {:;:}
+        ;
 
-sent_cond   ::= aux:a expr:e                        {: if(a){
-                                                            System.out.println(e);
-                                                       }else{
-                                                            System.out.println("outside");
-                                                       }
-                                                       ; :}
-                |   aux:a REG:reg ASSIGN expr:e     {: if(a) regs.add(reg, e); :}
-                ;
-
-aux         ::=    {: System.out.println("1:  " + ((Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-0)).value);
-RESULT = ((boolean) ((Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value); :};
-
-aux1        ::=    {: System.out.println("2:  " + ((Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value);
-RESULT = ((boolean) ((Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value); :};
-
-aux2        ::=    {: System.out.println("3:  " + ((Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value);
-RESULT = !((boolean) ((Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value); :};
-
-expr_log ::=    expr_log:e1 AND expr_log:e2       {: RESULT = e1 && e2; :}
-                |   expr_log:e1 OR expr_log:e2        {:RESULT = e1 || e2;:}
-                |   NOT expr_log:e               {:RESULT = !e;:}
-                |   LPAREN expr_log:e RPAREN          {:RESULT = e;:}
-                |   expr:e1 LT expr:e2           {:RESULT = e1 < e2;:}
-                |   expr:e1 BT expr:e2           {:RESULT = e1 > e2;:}
-                |   expr:e1 LE expr:e2           {:RESULT = e1 <= e2;:}
-                |   expr:e1 BE expr:e2           {:RESULT = e1 >= e2;:}
-                |   expr:e1 EQ expr:e2            {:RESULT = e1 == e2;:}
-                |   expr:e1 DIFF expr:e2           {:RESULT = e1 != e2;:}
-                ;
-
-expr  ::=        LPAREN expr:e RPAREN   {: RESULT = e; :}
-        |        expr:e1 ADD expr:e2    {: RESULT = e1 + e2; :}
-        |        expr:e1 SUB expr:e2    {: RESULT = e1 - e2; :}
-        |        expr:e1 MULT expr:e2   {: RESULT = e1 * e2; :}
-        |        expr:e1 DIV expr:e2    {:
-                                            if (e2 != 0)
-                                                RESULT = e1 / e2;
-                                            else {
-                                                System.err.println("Divisio per zero \n");
-                                            }
-                                        :}
-      |       expr:e1 REST expr:e2      {: RESULT = e1 % e2; :}
-      |       expr:e1 AND expr:e2       {: RESULT = e1 & e2; :}
-      |       expr:e1 OR expr:e2        {: RESULT = e1 | e2; :}
-      |       UMINUS expr:e             {: RESULT = - e; :}
-      |       REG:reg                   {: RESULT = regs.get(reg); :}
-      |       NUMBER:value                 {: RESULT = value; :}
-      ;
+expr ::=  LPAREN expr:e RPAREN      {: RESULT="("+e+")"; :}
+        |   NOT expr:e              {: RESULT="!("+e+")"; :}
+        |   expr:e1 OR expr:e2      {: RESULT=e1 + " || " + e2; :}
+        |   expr:e1 AND expr:e2     {: RESULT=e1 + " && " + e2; :}
+        |   expr:e1 IMPL expr:e2    {: RESULT="!" + e1 + " || " + e2; :}
+        |   expr:e1 DIMPL expr:e2   {: RESULT="(" + "!(" + e1 + ") || " + e2 + ") && (" + "!(" + e2 + ") || " + e1 + ")" ; :}
+        |   VAR:var                 {: RESULT=var; :}
+        ;

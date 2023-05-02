@@ -8,57 +8,29 @@ package org.example;
 /** CUP generated interface containing symbol constants. */
 public interface ParserSym {
   /* terminals */
-  public static final int AND = 17;
-  public static final int LT = 11;
-  public static final int QUESTION = 21;
-  public static final int RPAREN = 24;
-  public static final int OR = 18;
-  public static final int NOT = 5;
-  public static final int REG = 2;
-  public static final int LPAREN = 23;
-  public static final int COLON = 22;
-  public static final int LE = 13;
-  public static final int SUB = 7;
+  public static final int AND = 5;
   public static final int EOF = 0;
-  public static final int NUMBER = 3;
-  public static final int MULT = 8;
-  public static final int DIV = 9;
-  public static final int ADD = 6;
-  public static final int BT = 12;
-  public static final int NEWLINE = 20;
+  public static final int VAR = 2;
+  public static final int IMPL = 7;
+  public static final int DIMPL = 6;
   public static final int error = 1;
-  public static final int ASSIGN = 19;
-  public static final int EQ = 15;
-  public static final int DIFF = 16;
-  public static final int REST = 10;
-  public static final int UMINUS = 4;
-  public static final int BE = 14;
+  public static final int RPAREN = 9;
+  public static final int NOT = 3;
+  public static final int NEWLINE = 10;
+  public static final int LPAREN = 8;
+  public static final int OR = 4;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "REG",
-  "NUMBER",
-  "UMINUS",
+  "VAR",
   "NOT",
-  "ADD",
-  "SUB",
-  "MULT",
-  "DIV",
-  "REST",
-  "LT",
-  "BT",
-  "LE",
-  "BE",
-  "EQ",
-  "DIFF",
-  "AND",
   "OR",
-  "ASSIGN",
-  "NEWLINE",
-  "QUESTION",
-  "COLON",
+  "AND",
+  "DIMPL",
+  "IMPL",
   "LPAREN",
-  "RPAREN"
+  "RPAREN",
+  "NEWLINE"
   };
 }
 
