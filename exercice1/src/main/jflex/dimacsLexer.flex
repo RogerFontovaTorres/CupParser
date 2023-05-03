@@ -7,12 +7,13 @@ import java_cup.runtime.*;
 %class IdLexer
 %cup
 
-header = "p cnf"
+parameter = "p"
+cnf = "cnf"
 formulaEOL = "0"
-minus = "-"
-comment = "^c ".{newLine}
+negation = "-"
+comment = "c ".*{newLine}
 number = [1-9][0-9]*
-whitespace = [ \t\n]
+whitespace = [ \t]
 newLine = \n | \r | \r\n
 
 %{
@@ -24,6 +25,7 @@ newLine = \n | \r | \r\n
     private Symbol symbol(int type, Object value){
         return new Symbol(type, yyline, yycolumn, value);
     }
+    public static int nlin = 1;
 %}
 
 %eofval{
@@ -32,14 +34,21 @@ newLine = \n | \r | \r\n
 
 %%
 
-{comment} {}
+{comment}           { nlin++; }
 
-{digit}+ { return symbol(ParserSym.NUMBER, Integer.valueOf(yytext())); }
+{newLine}           { nlin++; }
 
-{formulaEOL} { return symbol(ParserSym.FORMULANEWLINE, yytext()); }
+{parameter}         {return symbol(ParserSym.PARAMETER, yytext()); }
 
-{minus} {return symbol(ParserSym.MINUS, yytext());}
+{cnf}               {return symbol(ParserSym.CNF, yytext()); }
+
+{number}            { return symbol(ParserSym.NUMBER, Integer.valueOf(yytext())); }
+
+{negation}          { return symbol(ParserSym.NEGATION, yytext()); }
+
+{formulaEOL}        { return symbol(ParserSym.EOL, yytext()); nlin++;}
+
+.                   {  }
 
 
-{whitespace}+ { }
 [^] {throw new Error("Cadena incorrecta (" + yytext() + ")");}

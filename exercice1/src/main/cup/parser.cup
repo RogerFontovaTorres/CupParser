@@ -1,15 +1,44 @@
+
 package org.example;
 
 import java_cup.runtime.*;
 
 class Parser;
 
-terminal MINUS, DECLARATION;
+parser code{:
+    private int num_var;
+    private int num_clau_def;
+    private int num_clau_prog = 0;
+    private boolean ok = true;
+:}
 
+terminal EOL, NEGATION, PARAMETER, CNF;
 terminal Integer NUMBER;
 
-non terminal Integer expr;
+non terminal program, clauses, clause, header, literals, literal, variable;
 
-start with expr;
+precedence left NEGATION;
+start with program;
 
-expr ::= NUMBER:n             {: RESULT = n; :};
+program ::= {: ; :}
+            | clause clauses {: ; :};
+
+clauses ::= clause {: ; :}
+            | clauses clause {: ; :};
+
+header ::= PARAMETER CNF NUMBER:e1 NUMBER:e2 {: num_var=e1;
+                                                num_clau_def=e2;
+                                                ;:};
+
+clause ::= literals EOL {: num_clau_prog++;
+                           ;:};
+
+literals ::= literal {: ; :}
+             | literals literal {: ; :};
+
+literal ::= NUMBER {: ; :}
+            | NEGATION NUMBER {: ; :};
+
+variable ::= NUMBER:e1 {: if (e1>num_var){
+                                fprint("variable num %i no definida\n", e1);
+                              };:};
