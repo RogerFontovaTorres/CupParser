@@ -8,16 +8,20 @@ package org.example;
 /** CUP generated interface containing symbol constants. */
 public interface ParserSym {
   /* terminals */
+  public static final int EOL = 4;
   public static final int error = 1;
-  public static final int NUMBER = 4;
-  public static final int DECLARATION = 3;
-  public static final int MINUS = 2;
+  public static final int CNF = 3;
+  public static final int NUMBER = 6;
+  public static final int PARAMETER = 2;
+  public static final int NEGATION = 5;
   public static final int EOF = 0;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "MINUS",
-  "DECLARATION",
+  "PARAMETER",
+  "CNF",
+  "EOL",
+  "NEGATION",
   "NUMBER"
   };
 }
