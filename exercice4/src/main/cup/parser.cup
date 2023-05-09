@@ -1,0 +1,91 @@
+package org.example;
+
+import java_cup.runtime.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.io.*;
+
+class Parser;
+parser code {:
+    IdLexer idLexer;
+    public static void main(String[] arg) throws Exception{
+        String archivo = "src/main/java/org/example/prueba.txt";
+        File f = new File(archivo);
+        InputStream inputStream = new FileInputStream(f);
+        IdLexer lexer = new org.example.IdLexer(new InputStreamReader(inputStream));
+
+        Parser p = new Parser();
+        p.idLexer = lexer;
+        p.setScanner(p.idLexer);
+        p.parse();
+    }
+    int nline = 0;
+     public void syntax_error(Symbol cur_token){
+            report_error("Error de sintaxis: linea "+idLexer.linea()+
+            ", columna "+idLexer.columna() + "\n", null);
+     }
+:}
+
+terminal FORALL, EXISTS;
+terminal String VAR, CONST, PREDICATE, FUNCTION, SEPARATOR;
+terminal String NOT;
+terminal String OR, AND;
+terminal DIMPL; // double implication
+terminal IMPL; // implication
+terminal String LPAREN, RPAREN;
+terminal NEWLINE;
+
+non terminal prog;
+non terminal sentencia;
+non terminal pred, func;
+non terminal String expr, llista_expr;
+non terminal String term, term_list;
+
+precedence left IMPL, DIMPL;
+precedence left OR;
+precedence left AND;
+precedence left FORALL, EXISTS;
+precedence left NOT;
+
+start with prog;
+
+prog ::=        {:;:}
+        |   prog sentencia {:;:}
+        ;
+
+sentencia ::= NEWLINE {:;:}
+        |   llista_expr:e NEWLINE    {: System.out.println("Line " + idLexer.linea() + " is correct"); :}
+        |   error           {: ; :}
+        ;
+
+llista_expr ::= expr                {: ; :}
+            |   expr llista_expr    {: ; :}
+            ;
+
+expr ::=    EXISTS VAR              {: ; :}
+        |   FORALL VAR              {: ; :}
+        |   LPAREN expr:e RPAREN    {: ; :}
+        |   NOT expr:e              {: ; :}
+        |   expr:e1 OR expr:e2      {: ; :}
+        |   expr:e1 AND expr:e2     {: ; :}
+        |   expr:e1 IMPL expr:e2    {: ; :}
+        |   expr:e1 DIMPL expr:e2   {: ; :}
+        |   pred                    {: ; :}
+        |   term:term               {: ; :}
+        ;
+
+pred ::=    PREDICATE LPAREN term_list RPAREN   {: ; :}
+        ;
+
+func ::=    FUNCTION LPAREN term_list RPAREN   {: ; :}
+        ;
+
+term_list ::=   term SEPARATOR term_list    {: ; :}
+            |   term                        {: ; :}
+            ;
+
+term ::=    func        {:;:}
+        |   VAR         {:;:}
+        |   CONST       {:;:}
+        ;

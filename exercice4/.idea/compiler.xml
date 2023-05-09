@@ -7,13 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="CupParser" />
-        <module name="exercice3" />
+        <module name="exercice4" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="CupParser" target="17" />
-      <module name="exercice" target="17" />
       <module name="exercice2" target="17" />
+      <module name="exercice3" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
