@@ -13,10 +13,5 @@ public class Main {
         IdLexer idLexer = new IdLexer(new InputStreamReader(inputStream));
         Parser p = new Parser(idLexer);
         p.parse();
-//        Symbol sym = idLexer.next_token();
-//        while(sym.sym != ParserSym.EOF){
-//            System.out.println(sym.value);
-//            sym = idLexer.next_token();
-//        }
     }
 }
