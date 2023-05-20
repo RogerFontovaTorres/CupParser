@@ -1,0 +1,57 @@
+package org.example;
+
+import java_cup.runtime.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.io.*;
+import java.util.HashMap;
+
+class Parser;
+parser code {:
+    IdLexer idLexer;
+    public static void main(String[] arg) throws Exception{
+        String archivo = "src/main/java/org/example/prueba.txt";
+        File f = new File(archivo);
+        InputStream inputStream = new FileInputStream(f);
+        IdLexer lexer = new org.example.IdLexer(new InputStreamReader(inputStream));
+
+        Parser p = new Parser();
+        p.idLexer = lexer;
+        p.setScanner(p.idLexer);
+        p.parse();
+    }
+    HashMap<ArrayList<String>> regs = new HashMap<>();
+
+    public void syntax_error(Symbol cur_token){
+        report_error("Error de sintaxis: linea "+idLexer.linea()+
+        ", columna "+idLexer.columna(), null);
+    }
+:}
+
+terminal String DOUBLEPOINTS, FINALMARK;
+terminal String CONST, TERMINAL;
+terminal String SEPARATOR;
+
+nonterminal lleng, sentencia, expr_list, expr;
+
+
+start with lleng;
+
+lleng ::=        {:;:}
+        |   lleng sentencia {:;:}
+        ;
+
+sentencia ::= CONST DOUBLEPOINTS expr_list:e FINALMARK    {: System.out.println(e);:}
+        |   error                                       {:;:}
+        ;
+
+expr_list ::=   expr:e   {: System.out.println(e);RESULT=e;:}
+        |   expr:e SEPARATOR expr_list {: System.out.println(e);RESULT=e;:}
+        ;
+
+expr ::=  TERMINAL:t expr     {: System.out.println(t);RESULT=t; :}
+        |   CONST:c expr      {: System.out.println(c);RESULT=c; :}
+        |   CONST:c           {: System.out.println(c);RESULT=c; :}
+        |   TERMINAL:t        {: System.out.println(t);RESULT=t; :}
+        ;
