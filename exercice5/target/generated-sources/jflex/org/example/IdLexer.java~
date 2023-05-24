@@ -5,6 +5,8 @@
 package org.example;
 import java_cup.runtime.*;
 
+import java.util.HashMap;
+
 // See https://github.com/jflex-de/jflex/issues/222
 @SuppressWarnings("FallThrough")
 public class IdLexer implements java_cup.runtime.Scanner {
@@ -743,6 +745,7 @@ public class IdLexer implements java_cup.runtime.Scanner {
           case 18: break;
           default:
             zzScanError(ZZ_NO_MATCH);
+            HashMap
         }
       }
     }

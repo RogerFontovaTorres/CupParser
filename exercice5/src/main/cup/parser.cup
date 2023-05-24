@@ -3,7 +3,9 @@ package org.example;
 import java_cup.runtime.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 import java.io.*;
 import java.util.HashMap;
 
@@ -21,37 +23,61 @@ parser code {:
         p.setScanner(p.idLexer);
         p.parse();
     }
-    HashMap<ArrayList<String>> regs = new HashMap<>();
+    HashMap<String, ArrayList<String>> constructors = new HashMap<>();
 
     public void syntax_error(Symbol cur_token){
         report_error("Error de sintaxis: linea "+idLexer.linea()+
         ", columna "+idLexer.columna(), null);
     }
+
+    public void printFirsts(){
+        for (Map.Entry<String, ArrayList<String>> set : constructors.entrySet()) {
+            System.out.print(set.getKey() + ": ");
+            printSentenceFirsts(constructors.get(set.getKey()));
+            System.out.println();
+        }
+    }
+
+    public void printSentenceFirsts(ArrayList<String> set){
+        for(String value : set){
+            if(Character.isUpperCase(value.toCharArray()[0])){
+                printSentenceFirsts(constructors.get(value));
+            }else{
+                System.out.print(value + " ");
+            }
+        }
+    }
+
+
 :}
 
 terminal String DOUBLEPOINTS, FINALMARK;
 terminal String CONST, TERMINAL;
 terminal String SEPARATOR;
 
-nonterminal lleng, sentencia, expr_list, expr;
+nonterminal lleng, sentencia;
+nonterminal String expr_list, expr;
 
 
 start with lleng;
 
-lleng ::=        {:;:}
-        |   lleng sentencia {:;:}
+lleng ::=        {:System.out.println(Arrays.asList(constructors)); printFirsts();:}
+        |   sentencia lleng  {:; :}
         ;
 
-sentencia ::= CONST DOUBLEPOINTS expr_list:e FINALMARK    {: System.out.println(e);:}
-        |   error                                       {:;:}
+sentencia ::= CONST:c DOUBLEPOINTS expr_list:e FINALMARK    {: System.out.println("3" + e); String[] reg = e.split(" "); ArrayList<String> values = new ArrayList<>(); for(String r : reg) {values.add(r); }; constructors.put(c,values);:}
+        |   error FINALMARK                               {:;:}
         ;
 
-expr_list ::=   expr:e   {: System.out.println(e);RESULT=e;:}
-        |   expr:e SEPARATOR expr_list {: System.out.println(e);RESULT=e;:}
+expr_list ::=   expr:e   {: RESULT=e;:}
+        |   expr:e SEPARATOR expr_list:el {:
+                                            RESULT=e + " " + el;
+
+        :}
         ;
 
-expr ::=  TERMINAL:t expr     {: System.out.println(t);RESULT=t; :}
-        |   CONST:c expr      {: System.out.println(c);RESULT=c; :}
-        |   CONST:c           {: System.out.println(c);RESULT=c; :}
-        |   TERMINAL:t        {: System.out.println(t);RESULT=t; :}
+expr ::=  TERMINAL:t expr     {: RESULT=t; :}
+        |   CONST:c expr      {: RESULT=c; :}
+        |   CONST:c           {: RESULT=c; :}
+        |   TERMINAL:t        {: RESULT=t; :}
         ;
