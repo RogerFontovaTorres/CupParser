@@ -20,25 +20,24 @@ parser code {:
         p.setScanner(p.idLexer);
         p.parse();
     }
-    int nline = 0;
      public void syntax_error(Symbol cur_token){
-            report_error("Error de sintaxis: linea "+idLexer.linea()+
-            ", columna "+idLexer.columna() + "\n", null);
+            report_error("Error de sintaxis: linea "+ (idLexer.linea() + 1 )+
+            ", columna "+ (idLexer.columna() + 1) + "\n", null);
      }
 :}
 
-terminal FORALL, EXISTS;
+terminal String FORALL, EXISTS;
 terminal String VAR, CONST, PREDICATE, FUNCTION, SEPARATOR;
 terminal String NOT;
 terminal String OR, AND;
-terminal DIMPL; // double implication
-terminal IMPL; // implication
+terminal String DIMPL; // double implication
+terminal String IMPL; // implication
 terminal String LPAREN, RPAREN;
-terminal NEWLINE;
+terminal String NEWLINE;
 
-non terminal prog;
-non terminal sentencia;
-non terminal pred, func;
+non terminal String prog;
+non terminal String sentencia;
+non terminal String pred, func;
 non terminal String expr, llista_expr;
 non terminal String term, term_list;
 
@@ -55,37 +54,37 @@ prog ::=        {:;:}
         ;
 
 sentencia ::= NEWLINE {:;:}
-        |   llista_expr:e NEWLINE    {: System.out.println("Line " + idLexer.linea() + " is correct"); :}
-        |   error           {: ; :}
+        |   llista_expr:e NEWLINE    {: System.out.println("Line " + idLexer.linea() + " is correct: " + e); :}
+        |   error:e NEWLINE          {: ; :}
         ;
 
-llista_expr ::= expr                {: ; :}
-            |   expr llista_expr    {: ; :}
+llista_expr ::= expr:e                  {: RESULT=e; :}
+            |   expr:e llista_expr:le   {: RESULT=e + le; :}
             ;
 
-expr ::=    EXISTS VAR              {: ; :}
-        |   FORALL VAR              {: ; :}
-        |   LPAREN expr:e RPAREN    {: ; :}
-        |   NOT expr:e              {: ; :}
-        |   expr:e1 OR expr:e2      {: ; :}
-        |   expr:e1 AND expr:e2     {: ; :}
-        |   expr:e1 IMPL expr:e2    {: ; :}
-        |   expr:e1 DIMPL expr:e2   {: ; :}
-        |   pred                    {: ; :}
-        |   term:term               {: ; :}
+expr ::=    EXISTS:e VAR:v              {: RESULT=e + " " + v + " "; :}
+        |   FORALL:f VAR:v              {: RESULT=f + " " + v + " "; :}
+        |   LPAREN:l expr:e RPAREN:r    {: RESULT=l + e + r; :}
+        |   NOT:n expr:e              {: RESULT=n + e; :}
+        |   expr:e1 OR:o expr:e2      {: RESULT=e1 + " " + o + " " + e2; :}
+        |   expr:e1 AND:a expr:e2     {: RESULT=e1 + " " + a + " " + e2; :}
+        |   expr:e1 IMPL:i expr:e2    {: RESULT=e1 + " " + i + " " + e2; :}
+        |   expr:e1 DIMPL:di expr:e2   {: RESULT=e1 + " " + di + " " + e2; :}
+        |   pred:p                    {: RESULT=p; :}
+        |   term:t               {: RESULT=t; :}
         ;
 
-pred ::=    PREDICATE LPAREN term_list RPAREN   {: ; :}
+pred ::=    PREDICATE:p LPAREN:l term_list:tl RPAREN:r   {: RESULT=p + l + tl + r; :}
         ;
 
-func ::=    FUNCTION LPAREN term_list RPAREN   {: ; :}
+func ::=    FUNCTION:f LPAREN:l term_list:tl RPAREN:r   {: RESULT=f + l + tl + r; :}
         ;
 
-term_list ::=   term SEPARATOR term_list    {: ; :}
-            |   term                        {: ; :}
+term_list ::=   term:t SEPARATOR:s term_list:tl    {: RESULT=t + s + " " + tl; :}
+            |   term:t                        {: RESULT=t; :}
             ;
 
-term ::=    func        {:;:}
-        |   VAR         {:;:}
-        |   CONST       {:;:}
+term ::=    func:f        {: RESULT=f;:}
+        |   VAR:v        {:RESULT=v;:}
+        |   CONST:c       {:RESULT=c;:}
         ;

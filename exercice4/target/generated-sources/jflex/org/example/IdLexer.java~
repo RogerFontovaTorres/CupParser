@@ -27,7 +27,7 @@ public class IdLexer implements java_cup.runtime.Scanner {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = {
-     0,  0,  1, 1
+     0,  0,  0, 0
   };
 
   /**
@@ -69,7 +69,7 @@ public class IdLexer implements java_cup.runtime.Scanner {
     "\11\13\2\0\1\14\1\0\1\15\21\0\5\16\14\0"+
     "\1\17\2\20\1\0\1\21\1\22\1\23\1\0\1\24"+
     "\2\0\1\25\2\0\1\26\2\0\1\27\1\30\1\31"+
-    "\3\0\1\32\2\13\1\0\1\33\10\0\1\2\u01a2\0"+
+    "\3\0\1\32\2\33\1\0\1\34\10\0\1\2\u01a2\0"+
     "\2\2\326\0\u0100\2";
 
   private static int [] zzUnpackcmap_blocks() {
@@ -97,10 +97,9 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\2\2\1\3\1\4\1\1\1\5\1\6"+
-    "\1\7\1\1\1\10\1\1\1\11\1\12\1\1\2\13"+
-    "\1\1\1\14\2\15\1\16\1\17\3\0\1\20\1\21"+
-    "\6\0\1\22\1\23";
+    "\1\0\1\1\2\2\1\3\1\4\1\1\1\5\1\6"+
+    "\1\7\11\1\1\10\1\11\1\0\1\12\1\13\1\0"+
+    "\1\14\1\0\1\15\1\16\1\17\6\0\1\20\1\21";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[38];
@@ -128,11 +127,11 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\34\0\70\0\70\0\124\0\160\0\70\0\214"+
-    "\0\70\0\70\0\70\0\250\0\70\0\304\0\70\0\70"+
-    "\0\340\0\374\0\70\0\u0118\0\70\0\70\0\u0134\0\70"+
-    "\0\70\0\u0150\0\u016c\0\u0188\0\70\0\70\0\u01a4\0\u01c0"+
-    "\0\u01dc\0\u01f8\0\u0214\0\u0230\0\70\0\70";
+    "\0\0\0\35\0\35\0\72\0\127\0\35\0\164\0\35"+
+    "\0\35\0\35\0\221\0\256\0\313\0\350\0\u0105\0\u0122"+
+    "\0\u013f\0\u015c\0\u0179\0\35\0\35\0\u0196\0\35\0\35"+
+    "\0\u01b3\0\35\0\u01d0\0\35\0\35\0\35\0\u01ed\0\u020a"+
+    "\0\u0227\0\u0244\0\u0261\0\u027e\0\35\0\35";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[38];
@@ -158,17 +157,18 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\1\4\1\0\1\5\1\6\1\7\1\10\1\11"+
-    "\1\12\1\13\1\14\1\15\1\16\1\3\1\17\2\20"+
-    "\1\21\1\22\1\23\6\3\1\15\1\24\1\25\1\26"+
-    "\1\0\1\27\30\25\35\0\1\4\36\0\1\6\35\0"+
-    "\1\30\42\0\1\31\30\0\1\32\53\0\1\33\27\0"+
-    "\1\34\40\0\1\35\1\0\1\26\47\0\1\36\42\0"+
-    "\1\37\36\0\1\40\34\0\1\41\22\0\1\42\45\0"+
-    "\1\43\27\0\1\44\36\0\1\45\30\0\1\46\6\0";
+    "\1\2\1\3\1\0\1\4\1\5\1\6\1\7\1\10"+
+    "\1\11\1\12\1\13\1\2\1\14\1\2\1\15\2\16"+
+    "\1\17\1\20\1\21\6\2\2\22\1\23\36\0\1\3"+
+    "\37\0\1\5\36\0\1\24\43\0\1\25\31\0\1\26"+
+    "\35\0\1\27\34\0\1\30\53\0\1\31\15\0\1\32"+
+    "\12\0\1\33\21\0\1\32\34\0\1\34\55\0\1\35"+
+    "\15\0\1\36\43\0\1\37\37\0\1\40\35\0\1\41"+
+    "\23\0\1\42\46\0\1\43\30\0\1\44\37\0\1\45"+
+    "\31\0\1\46\7\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[588];
+    int [] result = new int[667];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -211,9 +211,8 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\11\2\1\1\11\1\1\3\11\1\1\1\11"+
-    "\1\1\2\11\2\1\1\11\1\1\2\11\1\1\2\11"+
-    "\3\0\2\11\6\0\2\11";
+    "\1\0\2\11\2\1\1\11\1\1\3\11\11\1\2\11"+
+    "\1\0\2\11\1\0\1\11\1\0\3\11\6\0\2\11";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[38];
@@ -302,8 +301,8 @@ public class IdLexer implements java_cup.runtime.Scanner {
         return new Symbol(type, value);
     }
 
-    public int linea(){ return yyline+1; }
-    public int columna(){ return yycolumn+1; }
+    public int linea(){ return yyline; }
+    public int columna(){ return yycolumn; }
 
 
   /**
@@ -713,101 +712,90 @@ public class IdLexer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { System.out.println("Error found in line " + (yyline) + ": \"" + yytext() + '"');
-        yybegin(PANIC);
+            { System.out.println("Error found in line " + (linea() + 1) + ": \"" + yytext() + '"');
             }
             // fall through
-          case 20: break;
+          case 18: break;
           case 2:
             { return new Symbol(ParserSym.NEWLINE, yytext());
             }
             // fall through
-          case 21: break;
+          case 19: break;
           case 3:
             { 
             }
             // fall through
-          case 22: break;
+          case 20: break;
           case 4:
             { return new Symbol(ParserSym.NOT, yytext());
             }
             // fall through
-          case 23: break;
+          case 21: break;
           case 5:
             { return new Symbol(ParserSym.LPAREN, yytext());
             }
             // fall through
-          case 24: break;
+          case 22: break;
           case 6:
             { return new Symbol(ParserSym.RPAREN, yytext());
             }
             // fall through
-          case 25: break;
+          case 23: break;
           case 7:
             { return new Symbol(ParserSym.SEPARATOR, yytext());
             }
             // fall through
-          case 26: break;
+          case 24: break;
           case 8:
-            { return new Symbol(ParserSym.VAR, yytext());
-            }
-            // fall through
-          case 27: break;
-          case 9:
-            { return new Symbol(ParserSym.PREDICATE, yytext());
-            }
-            // fall through
-          case 28: break;
-          case 10:
-            { return new Symbol(ParserSym.CONST, yytext());
-            }
-            // fall through
-          case 29: break;
-          case 11:
-            { return new Symbol(ParserSym.FUNCTION, yytext());
-            }
-            // fall through
-          case 30: break;
-          case 12:
-            { ;
-            }
-            // fall through
-          case 31: break;
-          case 13:
-            { yybegin(YYINITIAL);
-            }
-            // fall through
-          case 32: break;
-          case 14:
             { return new Symbol(ParserSym.AND, yytext());
             }
             // fall through
-          case 33: break;
-          case 15:
+          case 25: break;
+          case 9:
             { return new Symbol(ParserSym.IMPL, yytext());
             }
             // fall through
-          case 34: break;
-          case 16:
+          case 26: break;
+          case 10:
+            { return new Symbol(ParserSym.PREDICATE, yytext());
+            }
+            // fall through
+          case 27: break;
+          case 11:
+            { return new Symbol(ParserSym.CONST, yytext());
+            }
+            // fall through
+          case 28: break;
+          case 12:
+            { return new Symbol(ParserSym.FUNCTION, yytext());
+            }
+            // fall through
+          case 29: break;
+          case 13:
+            { return new Symbol(ParserSym.VAR, yytext());
+            }
+            // fall through
+          case 30: break;
+          case 14:
             { return new Symbol(ParserSym.OR, yytext());
             }
             // fall through
-          case 35: break;
-          case 17:
+          case 31: break;
+          case 15:
             { return new Symbol(ParserSym.DIMPL, yytext());
             }
             // fall through
-          case 36: break;
-          case 18:
+          case 32: break;
+          case 16:
             { return new Symbol(ParserSym.EXISTS, yytext());
             }
             // fall through
-          case 37: break;
-          case 19:
+          case 33: break;
+          case 17:
             { return new Symbol(ParserSym.FORALL, yytext());
             }
             // fall through
-          case 38: break;
+          case 34: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

@@ -19,8 +19,8 @@ import java_cup.runtime.*;
         return new Symbol(type, value);
     }
 
-    public int linea(){ return yyline+1; }
-    public int columna(){ return yycolumn+1; }
+    public int linea(){ return yyline; }
+    public int columna(){ return yycolumn; }
 %}
 
 
@@ -30,10 +30,10 @@ import java_cup.runtime.*;
 
 
 /* Inicio de Expresiones regulares */
-Var=[x-z1-9]
-Const=[a-c1-9]
-Predicates=[P-T1-9]
-Functions=[f-g1-9]
+Var=[x-z][1-9]?
+Const=[a-c][1-9]?
+Predicates=[P-T][1-9]?
+Functions=[f-g][1-9]?
 Negation="!"
 Conjunction="&&"
 Disjunction="||"
@@ -59,7 +59,6 @@ NoMatch=.
 
 // Cada regla está formada por una {expresión} espacio {código}
 
-<YYINITIAL> {
     {ForAll} {
         return new Symbol(ParserSym.FORALL, yytext());
     }
@@ -123,11 +122,5 @@ NoMatch=.
         return new Symbol(ParserSym.NEWLINE, yytext());
     }
     {NoMatch} {
-        System.out.println("Error found in line " + (linea()) + ": \"" + yytext() + '"');
-        yybegin(PANIC);
+        System.out.println("Error found in line " + (linea() + 1) + ": \"" + yytext() + '"');
     }
-}
-<PANIC> {
-    .   {;}
-    \n|\r|\r\n   { yybegin(YYINITIAL);}
-}
