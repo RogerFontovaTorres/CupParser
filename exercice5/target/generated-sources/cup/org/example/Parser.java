@@ -116,7 +116,7 @@ public class Parser extends java_cup.runtime.lr_parser {
 
     IdLexer idLexer;
     public static void main(String[] arg) throws Exception{
-        String archivo = "src/main/java/org/example/prueba.txt";
+        String archivo = "src/main/java/org/example/test.txt";
         File f = new File(archivo);
         InputStream inputStream = new FileInputStream(f);
         IdLexer lexer = new org.example.IdLexer(new InputStreamReader(inputStream));
@@ -196,7 +196,7 @@ class CUP$Parser$actions {
           case 1: // lleng ::= 
             {
               Object RESULT =null;
-		System.out.println(Arrays.asList(constructors)); printFirsts();
+		 printFirsts();
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("lleng",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -220,7 +220,7 @@ class CUP$Parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		String e = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 System.out.println("3" + e); String[] reg = e.split(" "); ArrayList<String> values = new ArrayList<>(); for(String r : reg) {values.add(r); }; constructors.put(c,values);
+		 String[] reg = e.split(" "); ArrayList<String> values = new ArrayList<>(); for(String r : reg) {values.add(r); }; constructors.put(c,values);
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentencia",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

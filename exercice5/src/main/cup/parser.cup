@@ -13,7 +13,7 @@ class Parser;
 parser code {:
     IdLexer idLexer;
     public static void main(String[] arg) throws Exception{
-        String archivo = "src/main/java/org/example/prueba.txt";
+        String archivo = "src/main/java/org/example/test.txt";
         File f = new File(archivo);
         InputStream inputStream = new FileInputStream(f);
         IdLexer lexer = new org.example.IdLexer(new InputStreamReader(inputStream));
@@ -61,11 +61,11 @@ nonterminal String expr_list, expr;
 
 start with lleng;
 
-lleng ::=        {:System.out.println(Arrays.asList(constructors)); printFirsts();:}
+lleng ::=        {: printFirsts();:}
         |   sentencia lleng  {:; :}
         ;
 
-sentencia ::= CONST:c DOUBLEPOINTS expr_list:e FINALMARK    {: System.out.println("3" + e); String[] reg = e.split(" "); ArrayList<String> values = new ArrayList<>(); for(String r : reg) {values.add(r); }; constructors.put(c,values);:}
+sentencia ::= CONST:c DOUBLEPOINTS expr_list:e FINALMARK    {: String[] reg = e.split(" "); ArrayList<String> values = new ArrayList<>(); for(String r : reg) {values.add(r); }; constructors.put(c,values);:}
         |   error FINALMARK                               {:;:}
         ;
 
