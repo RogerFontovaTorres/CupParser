@@ -189,7 +189,7 @@ public class Parser extends java_cup.runtime.lr_parser {
 
     IdLexer idLexer;
     public static void main(String[] arg) throws Exception{
-        String archivo = "src/main/java/org/example/prueba.txt";
+        String archivo = "src/main/java/org/example/test.txt";
         File f = new File(archivo);
         InputStream inputStream = new FileInputStream(f);
         IdLexer lexer = new org.example.IdLexer(new InputStreamReader(inputStream));
@@ -200,8 +200,8 @@ public class Parser extends java_cup.runtime.lr_parser {
         p.parse();
     }
      public void syntax_error(Symbol cur_token){
-            report_error("Error de sintaxis: linea "+ (idLexer.linea() + 1 )+
-            ", columna "+ (idLexer.columna() + 1) + "\n", null);
+        report_error("Error de sintaxis: linea "+ (((IdLexer) this.getScanner()).linea() + 1) +
+        ", columna "+ (((IdLexer) this.getScanner()).columna() + 1) + "\n", null);
      }
 
 

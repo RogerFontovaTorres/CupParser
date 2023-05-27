@@ -5,8 +5,8 @@ import java_cup.runtime.*;
 %%
 %public
 %class IdLexer
-%cup
 %cupsym ParserSym
+%cup
 %column
 %line
 %unicode
@@ -22,6 +22,7 @@ import java_cup.runtime.*;
     }
     public int linea(){ return yyline+1; }
     public int columna(){ return yycolumn+1; }
+
 %}
 
 %eofval{
@@ -34,7 +35,6 @@ formulaEOL = "0"
 negation = "-"
 number = [1-9][0-9]*
 
-comment = "^c"[.]*{newLine}
 whitespace = [ \t]
 newLine = (\n | \r | \r\n)
 
@@ -49,19 +49,19 @@ newLine = (\n | \r | \r\n)
 
 <YYINITIAL> {
 
-    {comment}           { ; }
+    ^c.*{newLine}       { }
 
-    {newLine}           { ; }
+    {newLine}           { }
 
-    {parameter}         {   System.out.println(yytext());
+    {parameter}         {
                             return new Symbol(ParserSym.PARAMETER, yytext()); }
 
-    {cnf}               {   System.out.println(yytext());
+    {cnf}               {
                             return new Symbol(ParserSym.CNF, yytext()); }
 
     {number}            { return new Symbol(ParserSym.NUMBER, Integer.valueOf(yytext())); }
 
-    {negation}          { System.out.println(yytext());
+    {negation}          {
     return new Symbol(ParserSym.NEGATION, yytext()); }
 
     {formulaEOL}        { return new Symbol(ParserSym.EOL, yytext()); }

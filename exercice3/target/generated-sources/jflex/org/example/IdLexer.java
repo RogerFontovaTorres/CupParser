@@ -94,8 +94,8 @@ public class IdLexer implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\2\0\1\1\2\2\1\3\1\4\2\1\1\5\1\6"+
-    "\2\1\1\7\1\1\1\10\2\11\1\0\2\12\1\13"+
-    "\1\14\1\0\1\15\1\16";
+    "\2\1\1\7\1\1\1\10\2\11\1\0\2\3\1\12"+
+    "\1\13\1\0\1\14\1\15";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[26];
@@ -707,76 +707,69 @@ public class IdLexer implements java_cup.runtime.Scanner {
           case 1:
             { System.out.println("Error found in line " + (yyline + 1) + ": \"" + yytext() + '"');
         yybegin(PANIC);
-        yyline += 1;
+            }
+            // fall through
+          case 14: break;
+          case 2:
+            { return new Symbol((ParserSym.NEWLINE));
             }
             // fall through
           case 15: break;
-          case 2:
-            { yyline += 1;
-        return new Symbol((ParserSym.NEWLINE));
-            }
-            // fall through
-          case 16: break;
           case 3:
             { 
             }
             // fall through
-          case 17: break;
+          case 16: break;
           case 4:
             { return new Symbol(ParserSym.NOT, yytext());
             }
             // fall through
-          case 18: break;
+          case 17: break;
           case 5:
             { return new Symbol(ParserSym.LPAREN, yytext());
             }
             // fall through
-          case 19: break;
+          case 18: break;
           case 6:
             { return new Symbol(ParserSym.RPAREN, yytext());
             }
             // fall through
-          case 20: break;
+          case 19: break;
           case 7:
             { return new Symbol(ParserSym.VAR, yytext());
             }
             // fall through
-          case 21: break;
+          case 20: break;
           case 8:
             { ;
             }
             // fall through
-          case 22: break;
+          case 21: break;
           case 9:
             { yybegin(YYINITIAL);
             }
             // fall through
-          case 23: break;
+          case 22: break;
           case 10:
-            { yyline += 1;
-            }
-            // fall through
-          case 24: break;
-          case 11:
             { return new Symbol(ParserSym.AND, yytext());
             }
             // fall through
-          case 25: break;
-          case 12:
+          case 23: break;
+          case 11:
             { return new Symbol(ParserSym.IMPL, yytext());
             }
             // fall through
-          case 26: break;
-          case 13:
+          case 24: break;
+          case 12:
             { return new Symbol(ParserSym.OR, yytext());
             }
             // fall through
-          case 27: break;
-          case 14:
+          case 25: break;
+          case 13:
             { return new Symbol(ParserSym.DIMPL, yytext());
             }
             // fall through
-          case 28: break;
+          case 26: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

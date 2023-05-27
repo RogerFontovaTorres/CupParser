@@ -28,7 +28,7 @@ public class IdLexer implements java_cup.runtime.Scanner {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = {
-     0,  0,  1, 1
+     0,  1,  2, 2
   };
 
   /**
@@ -65,10 +65,9 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\12\0\1\1\2\2\1\3\37\0\1\4\1\5\1\0"+
-    "\1\6\11\7\44\0\1\10\4\0\1\11\2\0\1\12"+
-    "\7\0\1\13\1\0\1\14\24\0\1\2\u01a2\0\2\2"+
-    "\326\0\u0100\2";
+    "\12\0\1\1\2\2\1\3\37\0\1\4\2\0\1\5"+
+    "\11\6\51\0\1\7\2\0\1\10\7\0\1\11\1\0"+
+    "\1\12\24\0\1\2\u01a2\0\2\2\326\0\u0100\2";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1024];
@@ -95,11 +94,11 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\2\2\1\3\1\4\1\5\2\1\1\6"+
-    "\2\7\2\0\1\10";
+    "\3\0\2\1\1\2\1\3\1\4\1\1\1\5\1\1"+
+    "\1\6\2\7\3\0\2\10";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[16];
+    int [] result = new int[19];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -124,11 +123,12 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\15\0\32\0\32\0\47\0\32\0\32\0\64"+
-    "\0\101\0\116\0\32\0\32\0\133\0\150\0\165\0\32";
+    "\0\0\0\13\0\26\0\41\0\54\0\41\0\41\0\67"+
+    "\0\102\0\41\0\115\0\41\0\41\0\130\0\143\0\156"+
+    "\0\171\0\41\0\156";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[16];
+    int [] result = new int[19];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -151,14 +151,16 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\1\4\1\0\1\5\1\6\1\3\1\7\1\10"+
-    "\1\11\1\12\2\3\1\13\1\4\1\14\1\0\1\15"+
-    "\11\4\16\0\1\4\21\0\2\10\16\0\1\16\16\0"+
-    "\1\17\2\0\1\14\14\0\1\4\1\0\1\5\1\0"+
-    "\1\16\21\0\1\20\2\0";
+    "\2\4\1\0\1\5\1\6\1\7\1\10\1\11\2\4"+
+    "\1\12\2\4\1\0\1\5\1\6\1\7\1\10\1\13"+
+    "\2\4\1\12\1\14\1\15\1\0\1\16\7\14\14\0"+
+    "\1\4\16\0\2\10\15\0\1\17\1\0\1\20\1\4"+
+    "\1\0\1\5\5\20\1\21\1\20\1\0\1\15\21\0"+
+    "\1\22\2\0\1\20\1\4\1\0\1\5\10\20\1\4"+
+    "\1\0\1\5\4\20\1\23\2\20";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[130];
+    int [] result = new int[132];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -201,11 +203,11 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\11\1\1\2\11\3\1\2\11\1\1\2\0"+
-    "\1\11";
+    "\3\0\1\11\1\1\2\11\2\1\1\11\1\1\2\11"+
+    "\1\1\3\0\1\11\1\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[16];
+    int [] result = new int[19];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -275,7 +277,6 @@ public class IdLexer implements java_cup.runtime.Scanner {
   private long yychar;
 
   /** Whether the scanner is currently at the beginning of a line. */
-  @SuppressWarnings("unused")
   private boolean zzAtBOL = true;
 
   /** Whether the user-EOF-code has already been executed. */
@@ -292,6 +293,7 @@ public class IdLexer implements java_cup.runtime.Scanner {
     }
     public int linea(){ return yyline+1; }
     public int columna(){ return yycolumn+1; }
+
 
 
   /**
@@ -632,11 +634,44 @@ public class IdLexer implements java_cup.runtime.Scanner {
         }
         if (zzPeek) yyline--;
       }
+      if (zzMarkedPosL > zzStartRead) {
+        switch (zzBufferL[zzMarkedPosL-1]) {
+        case '\n':
+        case '\u000B':  // fall through
+        case '\u000C':  // fall through
+        case '\u0085':  // fall through
+        case '\u2028':  // fall through
+        case '\u2029':  // fall through
+          zzAtBOL = true;
+          break;
+        case '\r': 
+          if (zzMarkedPosL < zzEndReadL)
+            zzAtBOL = zzBufferL[zzMarkedPosL] != '\n';
+          else if (zzAtEOF)
+            zzAtBOL = false;
+          else {
+            boolean eof = zzRefill();
+            zzMarkedPosL = zzMarkedPos;
+            zzEndReadL = zzEndRead;
+            zzBufferL = zzBuffer;
+            if (eof) 
+              zzAtBOL = false;
+            else 
+              zzAtBOL = zzBufferL[zzMarkedPosL] != '\n';
+          }
+          break;
+        default:
+          zzAtBOL = false;
+        }
+      }
       zzAction = -1;
 
       zzCurrentPosL = zzCurrentPos = zzStartRead = zzMarkedPosL;
 
-      zzState = ZZ_LEXSTATE[zzLexicalState];
+      if (zzAtBOL)
+        zzState = ZZ_LEXSTATE[zzLexicalState+1];
+      else
+        zzState = ZZ_LEXSTATE[zzLexicalState];
 
       // set up zzAction for empty match case:
       int zzAttributes = zzAttrL[zzState];
@@ -706,29 +741,27 @@ public class IdLexer implements java_cup.runtime.Scanner {
             // fall through
           case 9: break;
           case 2:
-            { ;
+            { return new Symbol(ParserSym.NEGATION, yytext());
             }
             // fall through
           case 10: break;
           case 3:
-            { System.out.println(yytext());
-    return new Symbol(ParserSym.NEGATION, yytext());
+            { return new Symbol(ParserSym.EOL, yytext());
             }
             // fall through
           case 11: break;
           case 4:
-            { return new Symbol(ParserSym.EOL, yytext());
+            { return new Symbol(ParserSym.NUMBER, Integer.valueOf(yytext()));
             }
             // fall through
           case 12: break;
           case 5:
-            { return new Symbol(ParserSym.NUMBER, Integer.valueOf(yytext()));
+            { return new Symbol(ParserSym.PARAMETER, yytext());
             }
             // fall through
           case 13: break;
           case 6:
-            { System.out.println(yytext());
-                            return new Symbol(ParserSym.PARAMETER, yytext());
+            { ;
             }
             // fall through
           case 14: break;
@@ -738,8 +771,7 @@ public class IdLexer implements java_cup.runtime.Scanner {
             // fall through
           case 15: break;
           case 8:
-            { System.out.println(yytext());
-                            return new Symbol(ParserSym.CNF, yytext());
+            { return new Symbol(ParserSym.CNF, yytext());
             }
             // fall through
           case 16: break;

@@ -24,8 +24,8 @@ parser code {:
 
     int nline;
     public void syntax_error(Symbol cur_token){
-        report_error("Error de sintaxis: linea "+idLexer.linea()+
-        ", columna "+idLexer.columna(), null);
+        report_error("Error de sintaxis: linea "+ (((IdLexer) this.getScanner()).linea()) +
+        ", columna "+ (((IdLexer) this.getScanner()).columna()) + "\n", null);
     }
     String sentence = "";
 :}
@@ -55,7 +55,7 @@ prog ::=        {:;:}
 
 sentencia ::= NEWLINE {:;:}
         |   expr:e NEWLINE    {: System.out.println(e); :}
-        |   error           {:;:}
+        |   error NEWLINE     {:;:}
         ;
 
 expr ::=  LPAREN expr:e RPAREN      {: RESULT="("+e+")"; :}

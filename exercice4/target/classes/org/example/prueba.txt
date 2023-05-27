@@ -1,7 +1,0 @@
-forall x1 exists y P(x,y)
-?
-forall x exists y P(x,y)
-forall x exists y P(x,y)
-forall x exists y P(x,y)
-forall x exists y P(x,y)
-forall a exists y P(x,y)

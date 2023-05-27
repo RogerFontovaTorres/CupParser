@@ -7,16 +7,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String archivo = "src/main/java/org/example/prueba.txt";
+        String archivo = "test.txt";
         File f = new File(archivo);
         InputStream inputStream = new FileInputStream(f);
-        IdLexer idLexer = new org.example.IdLexer(new InputStreamReader(inputStream));
-        Parser p = new Parser(idLexer);
+        IdLexer lexer = new org.example.IdLexer(new InputStreamReader(inputStream));
+
+        Parser p = new Parser();
+        p.idLexer = lexer;
+        p.setScanner(p.idLexer);
         p.parse();
-//        Symbol sym = idLexer.next_token();
-//        while(sym.sym != ParserSym.EOF){
-//            System.out.println(sym.value);
-//            sym = idLexer.next_token();
-//        }
     }
 }

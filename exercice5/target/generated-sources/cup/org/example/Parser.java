@@ -129,8 +129,8 @@ public class Parser extends java_cup.runtime.lr_parser {
     HashMap<String, ArrayList<String>> constructors = new HashMap<>();
 
     public void syntax_error(Symbol cur_token){
-        report_error("Error de sintaxis: linea "+idLexer.linea()+
-        ", columna "+idLexer.columna(), null);
+        report_error("Error de sintaxis: linea "+ (((IdLexer) this.getScanner()).linea() + 1) +
+        ", columna "+ (((IdLexer) this.getScanner()).columna() + 1) + "\n", null);
     }
 
     public void printFirsts(){

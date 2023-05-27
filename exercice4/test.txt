@@ -1,0 +1,2 @@
+forall x1 exists y1 P(f(x,a), y, z, a, f(f(y))) -> forall x2 P(x2)
+forall forall x1 exists y1 P(f(x,a), y, z, a, f(f(y))) -> forall x2 P(x2)

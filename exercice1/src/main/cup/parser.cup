@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.io.*;
+import java.util.HashMap;
+
 class Parser;
 
 parser code{:
     IdLexer idLexer;
     public static void main(String[] arg) throws Exception{
-        String archivo = "src/main/java/org/example/prueba.txt";
+        String archivo = "est.txt";
         File f = new File(archivo);
         InputStream inputStream = new FileInputStream(f);
         IdLexer lexer = new org.example.IdLexer(new InputStreamReader(inputStream));
@@ -21,17 +23,18 @@ parser code{:
         p.setScanner(p.idLexer);
         p.parse();
     }
-    List<Integer> regs = new ArrayList<Integer>(Collections.nCopies(26, 0));
 
-    int nline;
-    private int num_var;
-    private int num_clau_def;
-    private int num_clau_prog = 0;
+    private Integer maxLiterals;
+    private Integer maxClauses;
+    private Integer totalClauses = 0;
+
     private boolean ok = true;
 
     public void syntax_error(Symbol cur_token){
-        report_error("Error de sintaxis: linea "+idLexer.linea()+
-        ", columna "+idLexer.columna() + "\n", null);
+//        report_error("Error de sintaxis: linea "+idLexer.linea()+
+//        ", columna "+idLexer.columna() + "\n", null);
+        report_error("Error de sintaxis: linea "+ (((IdLexer) this.getScanner()).linea() + 1) +
+        ", columna "+ (((IdLexer) this.getScanner()).columna() + 1) + "\n", null);
     }
 :}
 
@@ -46,28 +49,33 @@ start with program;
 
 program ::= {: ; :}
             | header clauses {: ; :}
-            | error
             ;
 
 clauses ::= clause {: ; :}
             | clauses clause {: ; :};
 
-header ::= PARAMETER CNF NUMBER:e1 NUMBER:e2 {: System.out.println("Here 1");
-                                                num_var=e1;
-                                                num_clau_def=e2;:};
+header ::= PARAMETER CNF NUMBER:e1 NUMBER:e2 {: maxLiterals=e1;
+                                                maxClauses=e2;:};
 
-clause ::= literals EOL {: System.out.println("Here 2");
-                                                                           num_clau_prog++; :}
-          ;
+clause ::= literals:ls EOL {:   totalClauses++;
+                                if(totalClauses > maxClauses){
+                                    System.out.println("Error: maximum number of clauses exceeded!");
+                                }else{
+                                    System.out.println(ls);
+                                }
+                                 :}
+            | error EOL
+            ;
 
-literals ::= literal:e {: System.out.println("Here 3");
-                                                                          RESULT="p"+e; :}
-             | literals:e1 literal:e2 {: System.out.println("Here 4");
-                                                                                         RESULT="p"+e1+e2; :};
+literals ::= literal:l {: RESULT=l; :}
+             | literals:ls literal:l {: RESULT=ls + " v " + l; :};
 
-literal ::= variable:e {: System.out.println("Here 5");
-                                                                          RESULT=e ; :}
-            | NEGATION variable:e {: System.out.println("Here 6");
-                                                                                     RESULT="¬"+e ;:};
+literal ::= variable:e {: RESULT="p"+e ; :}
+            | NEGATION variable:e {: RESULT="¬p"+e; :};
 
-variable ::= NUMBER:e1 {: System.out.println("here 7"); if (e1>num_var){ System.out.println("variable no definida");};:};
+variable ::= NUMBER:e1 {: if (e1 > maxLiterals){
+                            System.out.println("Error: " + '"' + e1 + '"' + " variable no definida");
+                          }else{
+                            RESULT=e1;
+                          }
+                          ; :};

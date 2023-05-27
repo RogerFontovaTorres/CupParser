@@ -91,17 +91,14 @@ NoMatch=.
     {Space} {}
 
     {Comment} {
-        yyline += 1;
     }
 
     {SaltoDeLinea} {
-        yyline += 1;
         return new Symbol((ParserSym.NEWLINE));
     }
     {NoMatch} {
         System.out.println("Error found in line " + (yyline + 1) + ": \"" + yytext() + '"');
         yybegin(PANIC);
-        yyline += 1;
     }
 }
 <PANIC> {

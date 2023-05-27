@@ -5,8 +5,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class Main {    public static void main(String[] args) throws Exception {
-    String archivo = "src/main/java/org/example/prueba.txt";
+public class Main {
+    public static void main(String[] args) throws Exception {
+    String archivo = "test.txt";
     File f = new File(archivo);
     InputStream inputStream = new FileInputStream(f);
     IdLexer idLexer = new org.example.IdLexer(new InputStreamReader(inputStream));
